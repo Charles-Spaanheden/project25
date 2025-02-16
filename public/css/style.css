@@ -3,3 +3,60 @@ img {
     height: 100px;
     
 }
+
+body {
+    background-color: blanchedalmond;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+a:hover {
+    color: red;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 150px;
+    height: 200px;
+    max-width: 150px;
+    max-height: 200px;
+    min-width: 150px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid black;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+}
+
+.card-divine {
+    border:4px solid rgb(3, 248, 223);
+    border-style:groove;
+}
+
+.card-legendary {
+    border:4px solid gold;
+}
+
+.card-epic {
+    border:4px solid purple;
+}
+
+.card-rare {
+    border:4px solid blue;
+}
+
+.card-common {
+    border:4px solid grey;
+}

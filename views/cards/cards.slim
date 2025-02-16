@@ -1,5 +1,9 @@
-h1 cards slim
+
+
+
 
 - cards.each do |card|
-    div
+    
+    div class="card" class="card-#{card["type"]}"
         img src="img/#{card["img"]}" alt="bild"
+        p #{card["name"]}

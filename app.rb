@@ -5,21 +5,19 @@ require 'sinatra/reloader'
 require 'bcrypt'
 
 get('/') do
-    db = SQLite3::Database.new("db/databas.db")
-    @image = db.execute("SELECT img FROM card")
-    @info = db.execute("SELECT * FROM card")
+    # db = SQLite3::Database.new("db/databas.db")
+    # @image = db.execute("SELECT img FROM card")
+    # @info = db.execute("SELECT * FROM card")
 
     slim(:home)
-
-
 end
 
 get('/cards') do
     db = SQLite3::Database.new("db/databas.db")
     db.results_as_hash = true
     result = db.execute("SELECT * FROM card")
-    p result
     slim(:"cards/cards",locals:{cards:result}) 
+
 end
 
 get('/cards/create') do
@@ -43,3 +41,4 @@ post('/cards/create') do
     db.execute("INSERT INTO card (name,type,img) VALUES (?,?,?)",[cardname,cardrarity,filename])
     redirect("/cards")
 end
+
