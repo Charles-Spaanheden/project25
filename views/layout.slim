@@ -5,9 +5,12 @@ html lang="en"
         meta name="viewport" content="width=device-width, initial-scale=1.0"/
         title Document
     body 
-
         nav 
+            a href="/" home
             a href="/cards/create" create
             a href="/cards" cards
+            a href="/cards/register" register
+            a href="/cards/login" login
+            a class="user" #{session[:username]}
         div class="main"
             ==yield

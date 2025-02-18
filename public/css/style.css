@@ -8,10 +8,16 @@ body {
     background-color: blanchedalmond;
 }
 
-a {
+a,p {
     text-decoration: none;
     color: black;
     font-size: 20px;
+    padding: 4px;
+}
+
+.user {
+    text-transform:uppercase;
+    color:crimson;
 }
 
 a:hover {
