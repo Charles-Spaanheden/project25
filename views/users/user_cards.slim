@@ -1,0 +1,10 @@
+h1 user cards
+
+- cards.each do |card|
+    
+    div class="card" class="card-#{card["type"]}"
+        img src="/img/#{card["img"]}" alt="bild"
+        p #{card["name"]}
+        form class="delete_button" action="/users/user_cards/delete/#{card['card_id']}/#{card['user_id']}/#{card['unique_id']}" method="post"
+            button type="submit" Delete Card
+        

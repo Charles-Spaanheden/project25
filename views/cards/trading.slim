@@ -1,0 +1,12 @@
+- logged_in_user_cards.each do |card|
+        div class="card" class="card-#{card["type"]}"
+            img src="/img/#{card["img"]}" alt="bild"
+            p #{card["name"]}
+
+hr
+
+- selected_user_cards.each do |card|
+    div class="card" class="card-#{card["type"]}"
+        img src="/img/#{card["img"]}" alt="bild"
+        p #{card["name"]}
+

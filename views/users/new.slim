@@ -1,5 +1,6 @@
-form action="/cards/register" method="post"
+form action="/users/new" method="post" enctype="multipart/form-data"
   input type="text" name="username" placeholder="Username"
+  input type="file" name="userimage"
   input type="password" name="password" placeholder="Password"
   input type="password" name="password_confirmation" placeholder="Password confirmation"
   input type="submit" value="Register"

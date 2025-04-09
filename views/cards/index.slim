@@ -1,0 +1,14 @@
+
+- cards.each do |card|
+    
+    div class="card" class="card-#{card["type"]}"
+        img src="img/#{card["img"]}" alt="bild"
+        p #{card["name"]}
+        - if logged_in
+            form class="take_button knapp" action="/users/user_cards/#{card['id']}/#{session[:id]}" method="post"
+                button type="submit" Take Card
+        - if admin
+            form class="delete_button knapp" action="/cards/delete/#{card['id']}" method="post"
+                button type="submit" Delete Card
+            form class="edit_button knapp" action="/cards/edit/#{card['id']}" method="post"
+                button type="submit" Edit Card
