@@ -1,6 +1,6 @@
     h2 users 
     - users.each do |user|
-        a href="/cards/trading/#{user['userid']}"
+        a href="/cards/#{user['userid']}/trading"
             div class="card"
                 img src="/profileimg/#{user["profileimg"]}" alt="bild"
                 p #{user["username"]}

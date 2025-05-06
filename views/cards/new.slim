@@ -1,8 +1,10 @@
 h1 create
 
-form action="/cards/new" method="post" enctype="multipart/form-data"
-    input type="text" name="cardname" placeholder="Card Name"
+form action="/cards" method="post" enctype="multipart/form-data"
+    <input type="text" name="cardname" placeholder="Card Name" required>
     / input type="radio"
-    input type="text" name="cardrarity" placeholder="How rare?"
-    input type="file" name="cardimage"
-    input type="submit" value="Upload"
+    <input type="text" name="cardrarity" placeholder="How rare?" required>
+    <input type="file" name="cardimage" required>
+    <input type="submit" value="Upload" required>
+ 
+    

@@ -1,4 +1,4 @@
-form action="/cards/edit/#{card['id']}" method="post" enctype="multipart/form-data"
+form action="/cards/#{card['id']}/edit" method="post" enctype="multipart/form-data"
     input type="text" name="cardname" value="#{card['name']}" placeholder="Card Name"
     input type="text" name="cardrarity" value="#{card['rarity']}" placeholder="How rare?"
     input type="file" name="cardimage"

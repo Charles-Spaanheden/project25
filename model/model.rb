@@ -6,8 +6,20 @@ module Model
         return db
     end
 
+   
+
+    def card()
+        db = databas("db/databas.db")
+        result = db.execute("SELECT * FROM card")
+        return result
+    end
+
     def cardcreate(cardname,cardrarity,cardimage,db)
         db = databas(db)
+        if cardname.length <= 0 || cardrarity.length <= 0
+            p "Card name and rarity cannot be empty"
+            return false
+        end
         if cardimage && cardimage[:filename]
             filename = cardimage[:filename]
             file = cardimage[:tempfile]
@@ -21,6 +33,10 @@ module Model
 
     def usercreate(username,password,userimage,password_confirmation,session,db)
         db = databas(db)
+        if username.length <= 0 || password.length <= 0 || password_confirmation.length <= 0
+            p "Username, password, and password confirmation cannot be empty"
+            return false
+        end
         if password == password_confirmation
             password_digest = BCrypt::Password.create(password)
             if userimage && userimage[:filename]
@@ -36,10 +52,10 @@ module Model
             end
             session[:username] = username
             username
-            redirect("/")
+            return true
         else
             p "Passwords do not match"
-            redirect("/user/new")
+            return false
         end
     end
 
@@ -47,13 +63,16 @@ module Model
         db = databas(db)
         db.results_as_hash = true
         result = db.execute("SELECT * FROM user WHERE username = ?",username).first
+        if result.nil?
+            return false
+        end
         pwdigest = result["password"]
         if BCrypt::Password.new(pwdigest) == password
             session[:username] = username
             session[:id] = result["userid"]
-            redirect("/")
+            return true
         else
-            redirect("/login")
+            return false
         end
     end
 
@@ -74,15 +93,53 @@ module Model
         db.execute("INSERT INTO card_user_ownership (card_id,user_id) VALUES (?,?)",[card_id,user_id])
     end
 
-    def carddelete(card_id,db)
-        db = databas(db)
-        db.execute("DELETE FROM card WHERE id = ?", [card_id])
+    def cooldown(time)
+        if time.nil?
+            return true
+        end
+        current_time = Time.now.to_i
+        if current_time.to_f - time.to_f >= 6
+            return true
+        else
+            p "too fast, try again later"
+            return false
+        end
     end
 
-    def usercardsdelete(card_id,user_id,unique_id,db)
+    def carddelete(card_id,db)
         db = databas(db)
-        db.execute("DELETE FROM card_user_ownership WHERE card_id = ? AND user_id = ? AND unique_id = ?", [card_id,user_id,unique_id])
+        file = db.execute("SELECT img FROM card WHERE id = ?", [card_id]).first
+        if file && file["img"]
+            path = "./public/img/#{file["img"]}"
+            File.delete(path) if File.exist?(path)
+        end
+        db.execute("DELETE FROM card WHERE id = ?", [card_id])
+        db.execute("DELETE FROM card_user_ownership WHERE card_id = ?", [card_id])
+        
     end
+
+    # def ownership(session,unique_id)
+    #     if session[:id] == unique_id
+    #         return true
+    #     else
+    #         return false
+    #     end
+    # end
+
+        
+
+    def usercardsdelete(card_id, user_id, unique_id, db)
+        db = databas(db)
+    
+        ownership = db.execute("SELECT * FROM card_user_ownership WHERE unique_id = ? AND user_id = ?", [unique_id, session[:id]]).first
+    
+        if ownership
+            db.execute("DELETE FROM card_user_ownership WHERE unique_id = ?", [unique_id])
+        else
+            pp "Don't tamper with other users cards"
+        end
+    end
+    
 
     def users(db)
         db = databas(db)
@@ -109,6 +166,10 @@ module Model
 
     def updatecard(card_id, cardname, cardrarity, cardimage, db)
         db = databas(db)
+        if cardname.nil? || cardrarity.nil?
+            p "Card name and rarity cannot be empty"
+            return false
+        end
         if cardimage && cardimage[:filename]
             filename = cardimage[:filename]
             file = cardimage[:tempfile]
